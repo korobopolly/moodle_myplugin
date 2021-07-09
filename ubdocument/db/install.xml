@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/ubdocument/db" VERSION="20210705" COMMENT="XMLDB file for Moodle local/ubdocument"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+<TABLES>
+    <TABLE NAME="local_ubdocument_tables" COMMENT="테이블정의서 - 테이블 정보">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+            <FIELD NAME="lang" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT="언어코드"/>
+            <FIELD NAME="physical_name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="테이블 물리명"/>
+            <FIELD NAME="logical_name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="테이블 논리명"/>
+            <FIELD NAME="comment" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="설명"/>
+            <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="삭제여부"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="uniq_ubdocument_tables" UNIQUE="true" FIELDS="lang,physical_name"/>
+            <INDEX NAME="lang" UNIQUE="false" FIELDS="lang"/>
+        </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ubdocument_table_columns" COMMENT="테이블정의서 - 필드정보">
+        <FIELDS>
+            <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+            <FIELD NAME="tid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id of local_ubdocument_tables"/>
+            <FIELD NAME="physical_name" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="필드 물리명"/>
+            <FIELD NAME="logical_name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="필드 논리명"/>
+            <FIELD NAME="column_seq" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="순번"/>
+            <FIELD NAME="column_type" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="필드 형태"/>
+            <FIELD NAME="column_length" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="필드 길이"/>
+            <FIELD NAME="column_nullable" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Null 허용"/>
+            <FIELD NAME="column_key" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="키(인덱스)"/>
+            <FIELD NAME="column_default" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="필드 기본값"/>
+            <FIELD NAME="column_comment" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="필드 설명"/>
+            <FIELD NAME="deleted" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="삭제여부"/>
+        </FIELDS>
+        <KEYS>
+            <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        </KEYS>
+        <INDEXES>
+            <INDEX NAME="uniq_ubdocument_table_columns" UNIQUE="true" FIELDS="tid,physical_name"/>
+            <INDEX NAME="tid" UNIQUE="false" FIELDS="tid"/>
+        </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

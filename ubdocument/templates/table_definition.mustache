@@ -1,0 +1,65 @@
+<form id="form-table-definition" method="post" action="table_definition.php">
+
+<div class="hide">
+    <input type="hidden" name="sesskey" value="sesskey">
+    <input type="hidden" name="proc_type" value="SAVE-SCHEMA">
+    <input type="hidden" name="lang" value="{{lang}}">
+</div>
+
+{{# tables}}
+<div class="content-box">
+    <table class="table table-bordered table-ubdocument">
+        <colgroup>
+            <col style="width:60px;">
+            <col style="width:100px;">
+            <col style="width:100px;">
+            <col style="width:100px;">
+            <col style="width:60px;">
+            <col style="width:60px;">
+            <col style="width:60px;">
+            <col style="width:80px;">
+            <col style="width:150px;">
+        </colgroup>
+        <thead>
+            <tr>
+                <th rowspan=2 colspan=2>{{# str }} table_definition, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} table_name, local_ubdocument {{/ str }}</th>
+                <td colspan=3>{{physical_name}}</td>
+                <th colspan=2>{{# str }} logical_name, local_ubdocument {{/ str }}</th>
+                <td><input type="text" name="table_logical_name_{{table_id}}" value="{{logical_name}}" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>{{# str }} comment, local_ubdocument {{/ str }}</th>
+                <td colspan=6><input type="text" name="table_comment_{{table_id}}" value="{{comment}}" class="form-control"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>NO.</th>
+                <th>{{# str }} logical_name, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} physical_name, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_type, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_length, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_nullallow, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_key, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_default, local_ubdocument {{/ str }}</th>
+                <th>{{# str }} column_comment, local_ubdocument {{/ str }}</th>
+            </tr>
+            {{#columns}}
+            <tr>
+                <td style="text-align:center;">{{column_seq}}</td>
+                <td><input type="text" name="field_logical_name_{{column_id}}" value="{{logical_name}}" class="form-control"></th>
+                <td class="text-left">{{physical_name}}</td>
+                <td>{{column_type}}</td>
+                <td>{{column_length}}</td>
+                <td>{{column_nullable}}</td>
+                <td>{{column_key}}</td>
+                <td>{{column_default}}</td>
+                <td><input type="text" name="field_comment_{{column_id}}" value="{{column_comment}}" class="form-control"></td>
+            </tr>
+            {{/columns}}
+        </tbody>
+    </table>
+</div>
+{{/ tables}}
+</form>

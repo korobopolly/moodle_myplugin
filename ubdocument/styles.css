@@ -1,0 +1,20 @@
+#page-local_ubdocument .float-left { float:left; }
+#page-local_ubdocument .float-right { float:right; }
+#page-local_ubdocument .btn-margin { margin:1px; }
+
+#page-local_ubdocument table.table>thead>tr>th { vertical-align: middle; }
+#page-local_ubdocument table.table-ubdocument { table-layout:fixed; }
+#page-local_ubdocument table.table-ubdocument>tbody>tr>th { text-align: center; }
+#page-local_ubdocument table.table-ubdocument>tbody>tr>td { text-align: center; }
+#page-local_ubdocument table.table-ubdocument>tbody>tr>td.text-left { text-align: left; }
+
+
+#page-local_ubdocument form input[type="text"], #page-local_ubdocument form input[type="password"] { width: 100%; max-width: none; }
+
+
+/** Swal 알림창 **/
+#page-local_ubdocument .swal2-popup { width:600px; max-width:95%; }
+#page-local_ubdocument .swal2-popup .swal2-content { font-size:14px; margin-bottom:10px; }
+#page-local_ubdocument .swal2-popup .swal2-content div#swal2-content { line-height:150%; }
+#page-local_ubdocument .swal2-popup .swal2-actions { align-items: center; justify-content: center; margin: 1.25em auto 15px auto; }
+#page-local_ubdocument .swal2-popup .swal2-actions button { font-size:14px; }
