@@ -142,3 +142,18 @@ function local_ubdocument_getTableDefinition($lang = null, $reset = false) {
 	return $table_definition;
 }
 
+/**
+ * 무들내의 모든 강좌를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_allCourses(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+
+    $sql = 'SELECT * FROM mdl_course WHERE id != 1';
+    // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문
+    $datas = $DB->get_records_sql($sql);    // object type으로 return
+
+    return $datas;//반환값
+}

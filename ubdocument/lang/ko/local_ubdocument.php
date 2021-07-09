@@ -5,6 +5,7 @@ $string['pluginname'] = '개발 산출물';
 $string['importtodatabase'] = '스키마 가져오기';
 $string['save'] = '저장하기';
 $string['table_definition'] = '테이블 정의서';
+$string['allcourses'] = '강좌 정보 확인';
 $string['table_name'] = '테이블명';
 $string['comment'] = '설명';
 $string['physical_name'] = '물리명';

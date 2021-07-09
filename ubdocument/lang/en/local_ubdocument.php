@@ -5,6 +5,7 @@ $string['pluginname'] = 'Development deliverables';
 $string['importtodatabase'] = 'import schema';
 $string['save'] = 'Save';
 $string['table_definition'] = 'Table definition';
+$string['allcourses'] = 'Course info';
 $string['table_name'] = 'Table';
 $string['comment'] = 'Comment';
 $string['physical_name'] = 'Physical';

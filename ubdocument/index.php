@@ -15,20 +15,22 @@ $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'index', array());
 
 echo $OUTPUT->header();
 //<h2>사이트 관리</h2>
-$define = html_writer::link('table_definition.php',get_string('table_definition', $pluginname));
 
 echo html_writer::start_div('', array('class'=>'tab-content mt-3'));
-echo html_writer::start_div('',array('class'=>'tab-pane active', 'id'=>'linkroot', 'role'=>'tabpanel'));
-echo html_writer::start_div('', array('class'=>'container'));
-echo html_writer::start_div('', array('class'=>'row'));
-echo html_writer::start_div('', array('class'=>'col'));
-echo html_writer::start_div('', array('class'=>'list-unstyled'));
-echo html_writer::tag('li',$define,array());
-echo html_writer::end_div();
-echo html_writer::end_div();
-echo html_writer::end_div();
-echo html_writer::end_div();
-echo html_writer::end_div();
+    echo html_writer::start_div('',array('class'=>'tab-pane active', 'id'=>'linkroot', 'role'=>'tabpanel'));
+        echo html_writer::start_div('', array('class'=>'container'));
+            echo html_writer::start_div('', array('class'=>'row'));
+                echo html_writer::start_div('', array('class'=>'col'));
+                    echo html_writer::start_div('', array('class'=>'list-unstyled'));
+                        $define = html_writer::link('table_definition.php',get_string('table_definition', $pluginname));
+                        echo html_writer::tag('li',$define,array());
+                        $remake = html_writer::link('allcourses.php',get_string('allcourses', $pluginname));
+                        echo html_writer::tag('li',$remake,array());
+                    echo html_writer::end_div();
+                echo html_writer::end_div();
+            echo html_writer::end_div();
+        echo html_writer::end_div();
+    echo html_writer::end_div();
 echo html_writer::end_div();
 
 //html_writer 도움말
