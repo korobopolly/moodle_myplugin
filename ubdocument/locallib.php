@@ -151,8 +151,42 @@ function local_ubdocument_getTableDefinition($lang = null, $reset = false) {
 function get_allCourses(){
     global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
 
-    $sql = 'SELECT * FROM mdl_course WHERE id != 1';
-    // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문
+    //  $sql = 'SELECT * FROM mdl_course WHERE id != 1';
+    $sql = 'SELECT id as id, sortorder, shortname, FROM_UNIXTIME(timecreated) as timecreated FROM mdl_course WHERE id != 1';
+    
+    // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
+    $datas = $DB->get_records_sql($sql);    // object type으로 return
+
+    return $datas;//반환값
+}
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_allUsers(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+
+    $sql = 'SELECT * FROM mdl_user WHERE id != 1';
+    // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
+    $datas = $DB->get_records_sql($sql);    // object type으로 return
+
+    return $datas;//반환값
+}
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_allTables(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+
+    $sql = 'SELECT * FROM mdl_local_ubdocument_tables WHERE id <447';
+    // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
     $datas = $DB->get_records_sql($sql);    // object type으로 return
 
     return $datas;//반환값
