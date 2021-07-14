@@ -36,18 +36,21 @@ $tables = get_allTables();
 // echo '</xmp>';
 
 echo '<table class="table table-border">';
-echo    '<tr>';
-echo        '<td>물리명</td>';
-echo        '<td>논리명</td>';
-echo        '<td>코멘트</td>';
-echo    '</tr>';
+echo    '<thead>';
+    echo    '<tr>';
+    echo        '<th>물리명</th>';
+    echo        '<th>논리명</th>';
+    echo        '<th>코멘트</th>';
+    echo    '</tr>';
+echo    '</thead>';
 foreach($tables as $v){
-    echo '<tr>';
-    echo    "<td>{$v->physical_name}</td>";
-    echo    "<td>{$v->logical_name}</td>";
-    //echo    '<td>'.$v->sortoder.'</td>';
-    echo    "<td>{$v->comment}</td>";
-    echo '</tr>';
+    echo '<tbody>';
+        echo '<tr>';
+        echo    "<td>{$v->physical_name}</td>";
+        echo    "<td>{$v->logical_name}</td>";
+        echo    "<td>{$v->comment}</td>";
+        echo '</tr>';
+    echo '</tbody>';
 }
 echo '</table>';
 

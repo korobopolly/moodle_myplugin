@@ -36,18 +36,21 @@ $users = get_allUsers();
 // echo '</xmp>';
 
 echo '<table class="table table-border">';
-echo    '<tr>';
-echo        '<td>아이디</td>';
-echo        '<td>이름</td>';
-echo        '<td>이메일</td>';
-echo    '</tr>';
+echo    '<thead>';
+    echo    '<tr>';
+    echo        '<th>아이디</th>';
+    echo        '<th>이름</th>';
+    echo        '<th>이메일</th>';
+    echo    '</tr>';
+echo    '</thead>';
 foreach($users as $v){
-    echo '<tr>';
-    echo    "<td>{$v->username}</td>";
-    //echo    '<td>'.$v->sortoder.'</td>';
-    echo    "<td>{$v->lastname}{$v->firstname}</td>";
-    echo    "<td>{$v->email}</td>";
-    echo '</tr>';
+    echo '<tbody>';
+        echo '<tr>';
+        echo    "<td>{$v->username}</td>";
+        echo    "<td>{$v->lastname}{$v->firstname}</td>";
+        echo    "<td>{$v->email}</td>";
+        echo '</tr>';
+    echo '</tbody>';
 }
 echo '</table>';
 

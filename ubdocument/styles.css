@@ -18,3 +18,14 @@
 #page-local_ubdocument .swal2-popup .swal2-content div#swal2-content { line-height:150%; }
 #page-local_ubdocument .swal2-popup .swal2-actions { align-items: center; justify-content: center; margin: 1.25em auto 15px auto; }
 #page-local_ubdocument .swal2-popup .swal2-actions button { font-size:14px; }
+
+
+
+#page-local_ubdocument table.table>thead>tr>th {
+    background-color: #ded8d8;
+    border: 1px solid #DEE2E6;
+}
+
+#page-local_ubdocument table.table>tbody>tr>td {
+    border: 1px solid #DEE2E6;
+}

@@ -17,42 +17,19 @@ if (!array_key_exists($lang, $languages)) {
     redirect('table_definition.php?lang=en', get_string('isnotallowlang', $pluginname, $lang), 1000);
 }
 
-$PAGE->set_url('/local/ubdocument/allcourses.php');
+$PAGE->set_url('/local/ubdocument/allcolumns.php');
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', $pluginname));
 $PAGE->set_pagetype('local_ubdocument');
 $PAGE->navbar->add(get_string('pluginname', $pluginname), $CFG->wwwroot.'/local/ubdocument/index.php');
-$PAGE->navbar->add(get_string('allcourses', $pluginname), $PAGE->url->out());
+$PAGE->navbar->add(get_string('allcolumns', $pluginname), $PAGE->url->out());
 
 $PAGE->requires->css('/local/ubdocument/assets/sweetalert/7.24.1/sweetalert2.min.css');
 $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', array());
 
 echo $OUTPUT->header();
 
-$courses = get_allCourses();
-
-// echo '<xmp>';
-// print_r($courses);
-// echo '</xmp>';
-
-echo '<table class="table table-border">';
-echo    '<thead>';
-    echo    '<tr>';
-    echo        '<th>강좌 코드</th>';
-    echo        '<th>강좌명</th>';
-    echo        '<th>생성 시간</th>';
-    echo    '</tr>';
-echo    '</thead>';
-foreach($courses as $v){
-    echo '<tbody>';
-        echo '<tr>';
-        echo    "<td>{$v->sortorder}</td>";
-        echo    '<td>'.$v->shortname.'</td>';
-        echo    "<td>{$v->timecreated}</td>";
-        echo '</tr>';
-    echo '</tbody>';
-}
-echo '</table>';
+print_r(get_allColumns()); //모든 객체를 출력
 
 echo $OUTPUT->footer();
 

@@ -191,3 +191,77 @@ function get_allTables(){
 
     return $datas;//반환값
 }
+
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_allColumns(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+  
+    $html = ''; //초기화
+
+    $sql = 'SELECT * FROM mdl_local_ubdocument_table_columns ORDER BY tid, column_seq'; //tid와 column_seq 순으로 정렬
+    if ($datas = $DB->get_records_sql($sql)) { 
+
+        $old_tid = 0; //변수 생성
+        foreach($datas as $v){
+            if ($v->tid != $old_tid) { //tid가 old_tid와 같지 않으면
+                if ($old_tid > 0) $html.="</tbody></table><br>"; //old_tid가 0이 아니면 tbody와 table을 닫고 여백
+                $html.="<table class='table table-border'>"; 
+                //.= 내부의 모든 것을 출력 여백까지도
+                $html.= " 
+                <thead>
+                    <tr>
+                        <th>NO.</th>
+                        <th>물리명</th>
+                        <th>논리명</th>
+                        <th>자료형</th>
+                    </tr>
+                </thead>
+                <tbody>";
+                $old_tid = $v->tid; //old_tid에 tid의 값을 넣는다.
+            }
+
+            $html.="<tr>
+                <td>{$v->column_seq}</td>
+                <td>{$v->physical_name}</td>
+                <td>{$v->logical_name}</td>
+                <td>{$v->column_type}</td>
+            </tr>";
+        }
+        if ($old_tid > 0) $html.="</tbody></table><br>";
+    } else { //에러 처리
+        $html = "<tr><td colspan=2>데이터가 없습니다.</td></tr>";
+    }
+
+    //반복문
+    // for($i=1; $i<$datas[count($datas)-1]->tid; $i=$i+1) {
+    //     // $i=1, tid=1
+    //     $datas[]
+
+    //     // '<table class="table table-border">';
+    //     //     '<tr>';
+    //     //         '<td>테이블 번호</td>';
+    //     //         '<td>물리명</td>';
+    //     //         '<td>논리명</td>';
+    //     //         '<td>자료형</td>';
+    //     //     '</tr>';
+    //     //     foreach($columns as $v){
+    //     //         $sql = 'SELECT * FROM mdl_local_ubdocument_table_columns WHERE column_num = tid ORDER BY id ASC';
+    //     //         '<tr>';
+    //     //             "<td>{$v->tid}</td>";
+    //     //             "<td>{$v->physical_name}</td>";
+    //     //             "<td>{$v->logical_name}</td>";
+    //     //             "<td>{$v->column_type}</td>";
+    //     //         '</tr>';
+    //     //         $column_num++;
+    //     //     }
+    //     // '</table>';
+    // }
+
+    return $html; //반환값
+}
