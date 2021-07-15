@@ -204,7 +204,11 @@ function get_allColumns(){
   
     $html = ''; //초기화
 
-    $sql = 'SELECT * FROM mdl_local_ubdocument_table_columns ORDER BY tid, column_seq'; //tid와 column_seq 순으로 정렬
+    $sql = 'SELECT c.id, c.tid, t.physical_name, t.logical_name, t.comment, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment 
+    FROM mdl_local_ubdocument_table_columns AS c 
+    JOIN mdl_local_ubdocument_tables AS t 
+    ON t.id=c.tid WHERE tid<447 ORDER BY c.id';
+
     if ($datas = $DB->get_records_sql($sql)) { 
 
         $old_tid = 0; //변수 생성
@@ -216,27 +220,43 @@ function get_allColumns(){
                 $html.= " 
                 <thead>
                     <tr>
+                        <td rowspan='2' style='font-weight: bold'>NO.{$v->tid}</td>
+                        <th>테이블명</th>
+                        <td>{$v->physical_name}</td>
+                        <th>논리명</th>
+                        <td>{$v->logical_name}</td>
+                    </tr>
+                    <tr>
+                        <th>코멘트</th>
+                        <td>{$v->comment}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <th>NO.</th>
                         <th>물리명</th>
                         <th>논리명</th>
                         <th>자료형</th>
+                        <th>코멘트</th>
                     </tr>
                 </thead>
                 <tbody>";
                 $old_tid = $v->tid; //old_tid에 tid의 값을 넣는다.
             }
-
             $html.="<tr>
-                <td>{$v->column_seq}</td>
-                <td>{$v->physical_name}</td>
-                <td>{$v->logical_name}</td>
-                <td>{$v->column_type}</td>
+                <td align='center'>{$v->column_seq}</td>
+                <td>{$v->c_pname}</td>
+                <td>{$v->c_lname}</td>
+                <td align='center'>{$v->column_type}</td>
+                <td align='center'>{$v->column_comment}</td>
             </tr>";
         }
         if ($old_tid > 0) $html.="</tbody></table><br>";
     } else { //에러 처리
         $html = "<tr><td colspan=2>데이터가 없습니다.</td></tr>";
     }
+
+    
 
     //반복문
     // for($i=1; $i<$datas[count($datas)-1]->tid; $i=$i+1) {
@@ -263,5 +283,71 @@ function get_allColumns(){
     //     // '</table>';
     // }
 
+    return $html; //반환값
+}
+
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_tabledefinition_en(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+  
+    $html = ''; //초기화
+
+    $sql = 'SELECT c.id, c.tid-446 AS eng, t.physical_name, t.logical_name, t.`comment`, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment 
+    FROM mdl_local_ubdocument_table_columns AS c 
+    JOIN mdl_local_ubdocument_tables AS t 
+    ON t.id=c.tid WHERE c.tid-446>0 ORDER BY c.id ';
+
+    if ($datas = $DB->get_records_sql($sql)) { 
+
+        $old_tid = 0; //변수 생성
+        foreach($datas as $v){
+            if ($v->eng != $old_tid) { //tid가 old_tid와 같지 않으면
+                if ($old_tid > 0) $html.="</tbody></table><br>"; //old_tid가 0이 아니면 tbody와 table을 닫고 여백
+                $html.="<table class='table table-border'>"; 
+                //.= 내부의 모든 것을 출력 여백까지도
+                $html.= " 
+                <thead>
+                    <tr>
+                        <td rowspan='2' style='font-weight: bold'>NO.{$v->eng}</td>
+                        <th>Table name</th>
+                        <td>{$v->physical_name}</td>
+                        <th>Logical name</th>
+                        <td>{$v->logical_name}</td>
+                    </tr>
+                    <tr>
+                        <th>Comment</th>
+                        <td>{$v->comment}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>NO.</th>
+                        <th>Physical_name</th>
+                        <th>Logical_name</th>
+                        <th>Type</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>";
+                $old_tid = $v->eng; //old_tid에 tid의 값을 넣는다.
+            }
+            $html.="<tr>
+                <td align='center'>{$v->column_seq}</td>
+                <td>{$v->c_pname}</td>
+                <td>{$v->c_lname}</td>
+                <td align='center'>{$v->column_type}</td>
+                <td align='center'>{$v->column_comment}</td>
+            </tr>";
+        }
+        if ($old_tid > 0) $html.="</tbody></table><br>";
+    } else { //에러 처리
+        $html = "<tr><td colspan=2>데이터가 없습니다.</td></tr>";
+    }
     return $html; //반환값
 }

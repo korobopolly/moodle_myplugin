@@ -2,10 +2,18 @@
 #page-local_ubdocument .float-right { float:right; }
 #page-local_ubdocument .btn-margin { margin:1px; }
 
-#page-local_ubdocument table.table>thead>tr>th { vertical-align: middle; }
+#page-local_ubdocument table.table>thead>tr>th { 
+    vertical-align: middle;
+    text-align: center;
+    background-color: #ded8d8;
+    border: 1px solid #DEE2E6; }
+#page-local_ubdocument table.table>thead>tr>td { 
+    text-align: center;
+    vertical-align: middle;
+}
 #page-local_ubdocument table.table-ubdocument { table-layout:fixed; }
 #page-local_ubdocument table.table-ubdocument>tbody>tr>th { text-align: center; }
-#page-local_ubdocument table.table-ubdocument>tbody>tr>td { text-align: center; }
+#page-local_ubdocument table.table-ubdocument>tbody>tr>td { text-align: center; border: 1px solid #DEE2E6; }
 #page-local_ubdocument table.table-ubdocument>tbody>tr>td.text-left { text-align: left; }
 
 
@@ -18,14 +26,3 @@
 #page-local_ubdocument .swal2-popup .swal2-content div#swal2-content { line-height:150%; }
 #page-local_ubdocument .swal2-popup .swal2-actions { align-items: center; justify-content: center; margin: 1.25em auto 15px auto; }
 #page-local_ubdocument .swal2-popup .swal2-actions button { font-size:14px; }
-
-
-
-#page-local_ubdocument table.table>thead>tr>th {
-    background-color: #ded8d8;
-    border: 1px solid #DEE2E6;
-}
-
-#page-local_ubdocument table.table>tbody>tr>td {
-    border: 1px solid #DEE2E6;
-}

@@ -34,6 +34,8 @@ echo html_writer::start_div('', array('class'=>'tab-content mt-3'));
                         echo html_writer::tag('li',$table,array());
                         $table = html_writer::link('allcolumns.php',get_string('allcolumns', $pluginname));
                         echo html_writer::tag('li',$table,array());
+                        $table = html_writer::link('table_definition_en.php',get_string('table_definition_en', $pluginname));
+                        echo html_writer::tag('li',$table,array());
                     echo html_writer::end_div();
                 echo html_writer::end_div();
             echo html_writer::end_div();
