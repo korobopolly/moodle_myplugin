@@ -405,3 +405,17 @@ function likefun() {
 
     return $html; //반환값
 }
+
+function hatefun() { 
+    $html = '';
+
+    $read = file("gooder.txt");
+    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
+    global $sum_count;
+    $sum_count = $count - 1;
+    $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
+    fwrite($fp, $sum_count); //파일에 데이터 쓰기
+    fclose($fp);
+
+    return $html; //반환값
+}

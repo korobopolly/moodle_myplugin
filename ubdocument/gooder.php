@@ -35,10 +35,14 @@ echo $OUTPUT->header();
 // echo '<br>';
 // print_r(gooder()); //모든 객체를 출력
 ?>
-<form method='post'> <input type='submit' name='like' id='like' class='btn btn-primary' value='좋아요'/></form>
+<form method='post'> 
+    <input type='submit' name='like' id='like' class='btn btn-primary' value='좋아요'/>
+    <input type='submit' name='hate' id='hate' class='btn btn-primary' value='싫어요'/>
+</form>
 <?php
 
 if(array_key_exists('like',$_POST)){ likefun(); }
+if(array_key_exists('hate',$_POST)){ hatefun(); }
 
 echo "$sum_count 명이 좋아합니다.";
 echo $OUTPUT->footer();
