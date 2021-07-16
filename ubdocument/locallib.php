@@ -152,7 +152,7 @@ function get_allCourses(){
     global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
 
     //  $sql = 'SELECT * FROM mdl_course WHERE id != 1';
-    $sql = 'SELECT id as id, sortorder, shortname, FROM_UNIXTIME(timecreated) as timecreated FROM mdl_course WHERE id != 1';
+    $sql = 'SELECT id as id, sortorder, shortname, FROM_UNIXTIME(timecreated) as timecreated FROM mdl_course WHERE id != 1 ORDER BY sortorder';
     
     // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
     $datas = $DB->get_records_sql($sql);    // object type으로 return
@@ -169,7 +169,7 @@ function get_allCourses(){
 function get_allUsers(){
     global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
 
-    $sql = 'SELECT * FROM mdl_user WHERE id != 1';
+    $sql = 'SELECT * FROM mdl_user WHERE id != 1 ORDER BY id';
     // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
     $datas = $DB->get_records_sql($sql);    // object type으로 return
 
@@ -185,7 +185,7 @@ function get_allUsers(){
 function get_allTables(){
     global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
 
-    $sql = 'SELECT * FROM mdl_local_ubdocument_tables WHERE id <447';
+    $sql = 'SELECT * FROM mdl_local_ubdocument_tables WHERE id <447 ORDER BY id';
     // $sql = "SELECT * FROM {course} WHERE id != 1"; //여러 곳에서 사용할 수 있는 sql문, ""쓰는 이유: 프리픽스(mdl_)를 자동 적용
     $datas = $DB->get_records_sql($sql);    // object type으로 return
 
@@ -349,5 +349,46 @@ function get_tabledefinition_en(){
     } else { //에러 처리
         $html = "<tr><td colspan=2>데이터가 없습니다.</td></tr>";
     }
+    return $html; //반환값
+}
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ */
+function counter(){
+    $html = '';
+
+    $read = file("counter.txt");
+    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
+    $sum_count = $count + 1;
+    $fp = fopen("counter.txt", "w"); //파일 열기 (쓰기 모드)
+    fwrite($fp, $sum_count); //파일에 데이터 쓰기
+    fclose($fp);
+
+    $html = "당신은 $sum_count 번째 방문자입니다.";
+
+    return $html; //반환값
+}
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ */
+function gooder(){
+    $html = '';
+
+    $read = file("gooder.txt");
+    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
+
+    $sum_count = $count + 1;
+    $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
+    fwrite($fp, $sum_count); //파일에 데이터 쓰기
+    fclose($fp);
+    // $html .= "
+    // <button class='btn btn-primary'>좋아요</button>
+    // <br>";
+    $html .= "$sum_count 명이 좋아합니다.";
+
     return $html; //반환값
 }
