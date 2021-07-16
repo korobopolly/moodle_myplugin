@@ -37,7 +37,7 @@ echo $OUTPUT->header();
 ?>
 <form method='post'> 
     <input type='submit' name='like' id='like' class='btn btn-primary' value='좋아요'/>
-    <input type='submit' name='hate' id='hate' class='btn btn-primary' value='싫어요'/>
+    <input type='submit' name='hate' id='hate' class='btn btn-info btn-margin' value='싫어요'/>
 </form>
 <?php
 
