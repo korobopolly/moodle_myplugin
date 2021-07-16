@@ -29,11 +29,17 @@ $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', 
 
 echo $OUTPUT->header();
 
-echo html_writer::start_tag('button', array('class'=>'btn btn-primary btn-margin btn-save-schema', 'onclick'=>"location.href='gooder.php'"));
-echo '좋아요';
-echo html_writer::end_tag('button');
-echo '<br>';
-print_r(gooder()); //모든 객체를 출력
+// echo html_writer::start_tag('button', array('class'=>'btn btn-primary btn-margin btn-save-schema', 'onclick'=>"location.href='gooder.php'"));
+// echo '좋아요';
+// echo html_writer::end_tag('button');
+// echo '<br>';
+// print_r(gooder()); //모든 객체를 출력
+?>
+<form method='post'> <input type='submit' name='like' id='like' class='btn btn-primary' value='좋아요'/></form>
+<?php
 
+if(array_key_exists('like',$_POST)){ likefun(); }
+
+echo "$sum_count 명이 좋아합니다.";
 echo $OUTPUT->footer();
 

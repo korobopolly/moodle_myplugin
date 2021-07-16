@@ -375,20 +375,33 @@ function counter(){
  * 무들내의 모든 사용자를 가져오는 함수
  * 
  */
-function gooder(){
+// function gooder(){
+//     $html = '';
+
+//     $read = file("gooder.txt");
+//     $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
+
+//     $sum_count = $count + 1;
+//     $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
+//     fwrite($fp, $sum_count); //파일에 데이터 쓰기
+//     fclose($fp);
+
+//     $html .= "$sum_count 명이 좋아합니다.";
+
+//     return $html; //반환값
+// }
+$sum_count=0;
+
+function likefun() { 
     $html = '';
 
     $read = file("gooder.txt");
     $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
-
+    global $sum_count;
     $sum_count = $count + 1;
     $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
     fwrite($fp, $sum_count); //파일에 데이터 쓰기
     fclose($fp);
-    // $html .= "
-    // <button class='btn btn-primary'>좋아요</button>
-    // <br>";
-    $html .= "$sum_count 명이 좋아합니다.";
 
     return $html; //반환값
 }
