@@ -204,7 +204,7 @@ function get_allColumns(){
   
     $html = ''; //초기화
 
-    $sql = 'SELECT c.id, c.tid, t.physical_name, t.logical_name, t.comment, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment 
+    $sql = 'SELECT c.id, c.tid, t.physical_name, t.logical_name, t.comment, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment , c.column_nullable as c_null, c.column_key as c_key
     FROM mdl_local_ubdocument_table_columns AS c 
     JOIN mdl_local_ubdocument_tables AS t 
     ON t.id=c.tid WHERE tid<447 ORDER BY c.id';
@@ -220,23 +220,25 @@ function get_allColumns(){
                 $html.= " 
                 <thead>
                     <tr>
-                        <td rowspan='2' style='font-weight: bold'>NO.{$v->tid}</td>
+                        <td rowspan='2' colspan='2' style='font-weight: bold'>NO.{$v->tid}</td>
                         <th>테이블명</th>
-                        <td>{$v->physical_name}</td>
+                        <td colspan='2'>{$v->physical_name}</td>
                         <th>논리명</th>
                         <td>{$v->logical_name}</td>
                     </tr>
                     <tr>
                         <th>코멘트</th>
-                        <td>{$v->comment}</td>
-                        <td></td>
-                        <td></td>
+                        <td colspan='2'>{$v->comment}</td>
+                        <th>작성자</th>
+                        <td>길민기</td>
                     </tr>
                     <tr>
-                        <th>NO.</th>
+                        <th>SEQ</th>
                         <th>물리명</th>
                         <th>논리명</th>
                         <th>자료형</th>
+                        <th>Null</th>
+                        <th>Key</th>
                         <th>코멘트</th>
                     </tr>
                 </thead>
@@ -248,6 +250,8 @@ function get_allColumns(){
                 <td>{$v->c_pname}</td>
                 <td>{$v->c_lname}</td>
                 <td align='center'>{$v->column_type}</td>
+                <td align='center'>{$v->c_null}</td>
+                <td align='center'>{$v->c_key}</td>
                 <td align='center'>{$v->column_comment}</td>
             </tr>";
         }
@@ -298,7 +302,7 @@ function get_tabledefinition_en(){
   
     $html = ''; //초기화
 
-    $sql = 'SELECT c.id, c.tid-446 AS eng, t.physical_name, t.logical_name, t.`comment`, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment 
+    $sql = 'SELECT c.id, c.tid-446 AS eng, t.physical_name, t.logical_name, t.`comment`, c.column_seq, c.column_type, c.physical_name as c_pname, c.logical_name as c_lname, column_comment, c.column_nullable as c_null, c.column_key as c_key
     FROM mdl_local_ubdocument_table_columns AS c 
     JOIN mdl_local_ubdocument_tables AS t 
     ON t.id=c.tid WHERE c.tid-446>0 ORDER BY c.id ';
@@ -314,23 +318,25 @@ function get_tabledefinition_en(){
                 $html.= " 
                 <thead>
                     <tr>
-                        <td rowspan='2' style='font-weight: bold'>NO.{$v->eng}</td>
+                        <td rowspan='2' colspan='2' style='font-weight: bold'>NO.{$v->tid}</td>
                         <th>Table name</th>
-                        <td>{$v->physical_name}</td>
+                        <td colspan='2'>{$v->physical_name}</td>
                         <th>Logical name</th>
                         <td>{$v->logical_name}</td>
                     </tr>
                     <tr>
                         <th>Comment</th>
-                        <td>{$v->comment}</td>
-                        <td></td>
-                        <td></td>
+                        <td colspan='2'>{$v->comment}</td>
+                        <th>Writer</th>
+                        <td>Kilminki</td>
                     </tr>
                     <tr>
-                        <th>NO.</th>
-                        <th>Physical_name</th>
-                        <th>Logical_name</th>
+                        <th>SEQ</th>
+                        <th>Physical name</th>
+                        <th>Logical name</th>
                         <th>Type</th>
+                        <th>Null</th>
+                        <th>Key</th>
                         <th>Comment</th>
                     </tr>
                 </thead>
@@ -342,6 +348,8 @@ function get_tabledefinition_en(){
                 <td>{$v->c_pname}</td>
                 <td>{$v->c_lname}</td>
                 <td align='center'>{$v->column_type}</td>
+                <td align='center'>{$v->c_null}</td>
+                <td align='center'>{$v->c_key}</td>
                 <td align='center'>{$v->column_comment}</td>
             </tr>";
         }
@@ -372,25 +380,13 @@ function counter(){
 }
 
 /**
- * 무들내의 모든 사용자를 가져오는 함수
+ * 좋아요와 싫어요 함수 
+ * (기본 값 가져오기)
  * 
  */
-// function gooder(){
-//     $html = '';
-
-//     $read = file("gooder.txt");
-//     $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
-
-//     $sum_count = $count + 1;
-//     $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
-//     fwrite($fp, $sum_count); //파일에 데이터 쓰기
-//     fclose($fp);
-
-//     $html .= "$sum_count 명이 좋아합니다.";
-
-//     return $html; //반환값
-// }
-$sum_count=0;
+$read = file("gooder.txt");
+$count = trim($read[0]);
+$sum_count=$count;
 
 function likefun() { 
     $html = '';
@@ -419,3 +415,24 @@ function hatefun() {
 
     return $html; //반환값
 }
+
+// function counter_del(){
+//     global $DB;
+
+//     $sql='SELECT id, username, FROM_UNIXTIME(firstaccess) AS firstaccess, FROM_UNIXTIME(lastaccess) AS lastaccess, 
+//     DATE_FORMAT(FROM_UNIXTIME(lastlogin),'%Y%m%d') AS lastlogin, 
+//     DATE_FORMAT(FROM_UNIXTIME(currentlogin),'%Y%m%d') AS currentlogin FROM mdl_user';
+
+//     $datas = $DB->get_records_sql($sql);
+
+//     if(currentlogin > lastlogin){
+
+//         //$read=file("counter.txt");
+//         //$count=trim($read[0]);
+//         $del_count=0;
+//         $fp=fopen("counter.txt","w");
+//         fwrite($fp,$del_count);
+//         fclose($fp);
+//     }
+    
+// }
