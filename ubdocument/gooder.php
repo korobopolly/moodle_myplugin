@@ -37,10 +37,12 @@ echo $OUTPUT->header();
 
 <?php
 
-if(array_key_exists('like',$_POST)){ likefun(); }
-if(array_key_exists('hate',$_POST)){ hatefun(); }
+if(array_key_exists('like',$_POST)){ likeFun(); }
+if(array_key_exists('hate',$_POST)){ hateFun(); }
 
-echo "$sum_count 명이 좋아합니다.";
+$point_count = showFun();
+
+echo "이 활동을 $point_count 명이 좋아합니다.";
 
 echo $OUTPUT->footer();
 

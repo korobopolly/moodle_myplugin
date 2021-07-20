@@ -1,5 +1,7 @@
 <?php
 
+use block_mockblock\search\area;
+
 /**
  * 데이터 스키마에서 기본값 적용
  * 
@@ -9,23 +11,29 @@
  * @throws Exception
  */
 function local_ubdocument_updateTableSchema($lang=null) {
-    global $DB, $CFG;
+    global $DB, $CFG; //moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
  
-    if (empty($lang)) $lang = current_language ();
+    if (empty($lang)) $lang = current_language (); //언어 선택
     
     $sql = ""
     . "SELECT "
         . "CONCAT(t1.table_name, '_field_', column_name) field_key, ordinal_position column_seq, t1.table_name, t1.table_comment, column_name, data_type, column_type, column_key, is_nullable, column_default, extra, column_comment "
+        //t1의 테이블 명, 필드, 컬럼 명 결합 및 필요한 컬럼들을 선택
     . "FROM "
-        . "(SELECT table_name, table_comment FROM information_schema.TABLES WHERE table_schema='".$CFG->dbname."') t1, "
+        . "(SELECT table_name, table_comment FROM information_schema.TABLES WHERE table_schema='".$CFG->dbname."') t1, " 
+        //테이블 명, 테이블 코멘트를 information_schema.TABLES에서 불러와 t1으로 묶음
         . "(SELECT table_name, column_name, data_type, column_type, column_key, is_nullable, column_default, extra, column_comment, ordinal_position FROM information_schema.COLUMNS WHERE table_schema='".$CFG->dbname."') t2 "
+        //테이블 명, 컬럼 명, 데이터 타입, 컬럼 타입, 컬럼 키, NULL 여부, 컬럼 디폴트 값, 기타, 컬럼 코멘트, 색인을 information_schema.COLUMNS에서 불러와 t2로 묶음
     . "WHERE t1.table_name = t2.table_name "
+    //조건 : t1과 t2의 테이블 명이 같은 것
     . "ORDER BY t1.table_name, ordinal_position";
+    //t1의 테이블 명과 색인을 기준으로 정렬
     
     if ($datas = $DB->get_records_sql($sql)) {
-                
-        // 초기화
+        //sql에서 가져온 데이터를 datas에 저장했다면
+
         $DB->execute("UPDATE {local_ubdocument_tables} t JOIN {local_ubdocument_table_columns} c ON c.tid = t.id SET t.deleted=1, c.deleted=1 WHERE t.lang=:lang", array('lang'=>$lang));
+        
 
         foreach($datas as $v) {
             $table = new stdClass();
@@ -360,10 +368,6 @@ function get_tabledefinition_en(){
     return $html; //반환값
 }
 
-/**
- * 무들내의 모든 사용자를 가져오는 함수
- * 
- */
 function counter(){
     $html = '';
 
@@ -380,59 +384,60 @@ function counter(){
 }
 
 /**
- * 좋아요와 싫어요 함수 
- * (기본 값 가져오기)
+ * 좋아요와 싫어요
  * 
  */
-$read = file("gooder.txt");
-$count = trim($read[0]);
-$sum_count=$count;
 
-function likefun() { 
-    $html = '';
+function showFun(){
+    global $DB;
 
-    $read = file("gooder.txt");
-    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
-    global $sum_count;
-    $sum_count = $count + 1;
-    $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
-    fwrite($fp, $sum_count); //파일에 데이터 쓰기
-    fclose($fp);
-
-    return $html; //반환값
+    $data = $DB->get_field('good', 'point', array());
+    //DB get_field : good 테이블의 point 컬럼의 필드 데이터를 가져옴
+    return $data;
 }
 
-function hatefun() { 
-    $html = '';
+function showHate(){
+    global $DB;
 
-    $read = file("gooder.txt");
-    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
-    global $sum_count;
-    $sum_count = $count - 1;
-    $fp = fopen("gooder.txt", "w"); //파일 열기 (쓰기 모드)
-    fwrite($fp, $sum_count); //파일에 데이터 쓰기
-    fclose($fp);
-
-    return $html; //반환값
+    $data = $DB->get_field('good', 'loss', array());
+    //DB get_field : good 테이블의 loss 컬럼의 필드 데이터를 가져옴
+    return $data;
 }
 
-// function counter_del(){
-//     global $DB;
+function likeFun() { 
+    global $DB;
 
-//     $sql='SELECT id, username, FROM_UNIXTIME(firstaccess) AS firstaccess, FROM_UNIXTIME(lastaccess) AS lastaccess, 
-//     DATE_FORMAT(FROM_UNIXTIME(lastlogin),'%Y%m%d') AS lastlogin, 
-//     DATE_FORMAT(FROM_UNIXTIME(currentlogin),'%Y%m%d') AS currentlogin FROM mdl_user';
+    $data = $DB->get_record('good', array());
+    //DB get_record : good 테이블에서 데이터를 가져옴
 
-//     $datas = $DB->get_records_sql($sql);
+    $object_good = new stdClass();
+    //비어있는 클래스 생성
+    $object_good->id = $data->id;
+    //멤버 변수에 접근
+    $object_good->point = $data->point + 1;
+    //멤버 변수에 접근
 
-//     if(currentlogin > lastlogin){
+    $DB->update_record('good', $object_good);
+    //DB update_record : good 테이블에 변수 값을 업데이트
 
-//         //$read=file("counter.txt");
-//         //$count=trim($read[0]);
-//         $del_count=0;
-//         $fp=fopen("counter.txt","w");
-//         fwrite($fp,$del_count);
-//         fclose($fp);
-//     }
-    
-// }
+    echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
+}
+
+function hateFun() {
+    global $DB;
+
+    $data = $DB->get_record('good', array());
+    //DB get_record : good 테이블에서 데이터를 가져옴
+
+    $object_good = new stdClass();
+    //비어있는 클래스 생성
+    $object_good->id = $data->id;
+    //멤버 변수에 접근
+    $object_good->loss = $data->loss + 1;
+    //멤버 변수에 접근
+
+    $DB->update_record('good', $object_good);
+    //DB update_record : good 테이블에 변수 값을 업데이트
+
+    echo "<script>alert(\"이 활동을 싫어합니다.\");</script>";
+}
