@@ -29,7 +29,10 @@ $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', 
 
 echo $OUTPUT->header();
 
-print_r(counter()); //모든 객체를 출력
+visitCounter();
+$visit_count = showCounter();
+
+echo "$visit_count 명이 방문했습니다.";
 
 echo $OUTPUT->footer();
 

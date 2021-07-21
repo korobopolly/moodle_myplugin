@@ -368,26 +368,33 @@ function get_tabledefinition_en(){
     return $html; //반환값
 }
 
-function counter(){
-    $html = '';
+//방문자 카운터
+function showCounter(){
+    global $DB;
 
-    $read = file("counter.txt");
-    $count = trim($read[0]); //좌우 공백을 자르고 텍스트만 순수하게 가져옴
-    $sum_count = $count + 1;
-    $fp = fopen("counter.txt", "w"); //파일 열기 (쓰기 모드)
-    fwrite($fp, $sum_count); //파일에 데이터 쓰기
-    fclose($fp);
-
-    $html = "당신은 $sum_count 번째 방문자입니다.";
-
-    return $html; //반환값
+    $data = $DB->get_field('visit', 'visitor', array());
+    //DB get_field : visit 테이블의 visitor 컬럼의 필드 데이터를 가져옴
+    return $data;
 }
 
-/**
- * 좋아요와 싫어요
- * 
- */
+function visitCounter(){
+    global $DB;
 
+    $data = $DB->get_record('visit', array());
+    //DB get_record : visit 테이블에서 데이터를 가져옴
+
+    $object_good = new stdClass();
+    //비어있는 클래스 생성
+    $object_good->id = $data->id;
+    //멤버 변수에 접근
+    $object_good->visitor = $data->visitor + 1;
+    //멤버 변수에 접근
+
+    $DB->update_record('visit', $object_good);
+    //DB update_record : visit 테이블에 변수 값을 업데이트
+}
+
+//좋아요와 싫어요
 function showFun(){
     global $DB;
 
