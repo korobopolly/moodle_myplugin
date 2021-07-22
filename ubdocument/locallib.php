@@ -412,39 +412,48 @@ function showHate(){
 }
 
 function likeFun() { 
-    global $DB;
+    global $DB, $USER;
 
-    $data = $DB->get_record('good', array());
-    //DB get_record : good 테이블에서 데이터를 가져옴
+    $data = $DB->get_record('good', array());       //DB get_record : good 테이블에서 데이터를 가져옴
 
-    $object_good = new stdClass();
-    //비어있는 클래스 생성
-    $object_good->id = $data->id;
-    //멤버 변수에 접근
-    $object_good->point = $data->point + 1;
-    //멤버 변수에 접근
+    $object_good = new stdClass();              // 비어있는 클래스 생성
+    $object_good->id = $data->id;               // 업데이트 시 매핑을 위한 id 값을 할당
+    $object_good->point = $data->point + 1;     // 불러온 토탈 카운트 수 + 1
 
-    $DB->update_record('good', $object_good);
-    //DB update_record : good 테이블에 변수 값을 업데이트
+    $user_data = $DB->get_record('user', array('id'=>$USER->id));
+    $user_data->gooder = 1;
 
-    echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
+    $DB->update_record('good', $object_good);       //DB update_record : good 테이블에 변수 값을 업데이트
+    //print_r($object_good_user); die;
+    $DB->update_record('user', $user_data);  //DB update_record : usre 테이블에 gooder 필드를 업데이트 (참여x -> 참여o)
+
+    // echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
 }
 
-function hateFun() {
-    global $DB;
+function hateFun() { 
+    global $DB, $USER;
 
-    $data = $DB->get_record('good', array());
-    //DB get_record : good 테이블에서 데이터를 가져옴
+    $data = $DB->get_record('good', array());       //DB get_record : good 테이블에서 데이터를 가져옴
 
-    $object_good = new stdClass();
-    //비어있는 클래스 생성
-    $object_good->id = $data->id;
-    //멤버 변수에 접근
-    $object_good->loss = $data->loss + 1;
-    //멤버 변수에 접근
+    $object_good = new stdClass();              // 비어있는 클래스 생성
+    $object_good->id = $data->id;               // 업데이트 시 매핑을 위한 id 값을 할당
+    $object_good->loss = $data->loss + 1;     // 불러온 토탈 카운트 수 + 1
 
-    $DB->update_record('good', $object_good);
-    //DB update_record : good 테이블에 변수 값을 업데이트
+    $user_data = $DB->get_record('user', array('id'=>$USER->id));
+    $user_data->gooder = 1;
 
-    echo "<script>alert(\"이 활동을 싫어합니다.\");</script>";
+    $DB->update_record('good', $object_good);       //DB update_record : good 테이블에 변수 값을 업데이트
+    //print_r($object_good_user); die;
+    $DB->update_record('user', $user_data);  //DB update_record : usre 테이블에 gooder 필드를 업데이트 (참여x -> 참여o)
+
+    // echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
+}
+
+// 현재 접속자의 gooder 필드를 가져옴
+function getUserGooder(){
+    global $DB, $USER;
+
+    $data = $DB->get_field('user', 'gooder', array('id'=>$USER->id));
+
+    return $data;
 }

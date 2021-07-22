@@ -28,21 +28,36 @@ $PAGE->requires->css('/local/ubdocument/assets/sweetalert/7.24.1/sweetalert2.min
 $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', array());
 
 echo $OUTPUT->header();
-?>
 
-<form method='post'> 
-    <input type='submit' name='like' id='like' class='btn btn-primary' value='좋아요'/>
-    <input type='submit' name='hate' id='hate' class='btn btn-info btn-margin' value='싫어요'/>
-</form>
+$user_gooder_check = getUserGooder();    // 현재 접속자의 좋아요 참여 여부
 
-<?php
-
-if(array_key_exists('like',$_POST)){ likeFun(); }
-if(array_key_exists('hate',$_POST)){ hateFun(); }
+if($user_gooder_check != 1){   // 유저의 gooder 필드를 체크해서 출력여부판단
+    //좋아요 싫어요 버튼
+    echo html_writer::start_tag('form', array('method' => 'post', 'action'=>'action.php'));
+        $like=array('type' => 'submit', 'name' => 'like', 'id' => 'like', 'value' => '좋아요', 'class' => 'btn btn-primary');
+        echo html_writer::empty_tag('input', $like);
+        echo "&nbsp&nbsp";
+        $hate=array('type' => 'submit', 'name' => 'hate', 'id' => 'hate', 'value' => '싫어요', 'class' => 'btn btn-info btn-margin');
+        echo html_writer::empty_tag('input', $hate);
+    echo html_writer::end_tag('form');
+} else {
+    //disabled
+    echo html_writer::start_tag('form', array('method' => 'post', 'action'=>'action.php'));
+        $like=array('type' => 'submit', 'name' => 'like', 'id' => 'like', 'value' => '좋아요', 'class' => 'btn', 'style'=>'background-color:#696969; color:white;', 'disabled'=>'disabled');
+        echo html_writer::empty_tag('input', $like);
+        echo "&nbsp&nbsp";
+        $hate=array('type' => 'submit', 'name' => 'hate', 'id' => 'hate', 'value' => '싫어요', 'class' => 'btn btn-margin', 'style'=>'background-color:#696969; color:white;', 'disabled'=>'disabled');
+        echo html_writer::empty_tag('input', $hate);
+    echo html_writer::end_tag('form');
+    echo html_writer::tag('p','해당 평가는 한번만 가능합니다.');
+}
 
 $point_count = showFun();
 
-echo "이 활동을 $point_count 명이 좋아합니다.";
+echo html_writer::start_div();
+echo "이 활동을 <b>$point_count</b><b>명</b>이 좋아합니다.";
+echo html_writer::end_div();
+
 
 echo $OUTPUT->footer();
 
