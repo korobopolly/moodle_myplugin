@@ -319,14 +319,14 @@ function get_tabledefinition_en(){
 
         $old_tid = 0; //변수 생성
         foreach($datas as $v){
-            if ($v->eng != $old_tid) { //tid가 old_tid와 같지 않으면
+            if ($v->eng != $old_tid) { //eng가 old_tid와 같지 않으면
                 if ($old_tid > 0) $html.="</tbody></table><br>"; //old_tid가 0이 아니면 tbody와 table을 닫고 여백
                 $html.="<table class='table table-border'>"; 
                 //.= 내부의 모든 것을 출력 여백까지도
                 $html.= " 
                 <thead>
                     <tr>
-                        <td rowspan='2' colspan='2' style='font-weight: bold'>NO.{$v->tid}</td>
+                        <td rowspan='2' colspan='2' style='font-weight: bold'>NO.{$v->eng}</td>
                         <th>Table name</th>
                         <td colspan='2'>{$v->physical_name}</td>
                         <th>Logical name</th>
@@ -457,3 +457,13 @@ function getUserGooder(){
 
     return $data;
 }
+
+/** 
+require_once('./preference.php');
+function autoDatasave(){
+    global $DB, $USER;
+
+    $cmid = $DB->get_field('user', 'gooder', array('id'=>$USER->id));
+    $data_pre = showPreference($cmid, $course->id);
+}
+*/
