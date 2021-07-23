@@ -411,7 +411,7 @@ function showHate(){
     return $data;
 }
 
-function likeFun() { 
+function likeFun(){ 
     global $DB, $USER;
 
     $data = $DB->get_record('good', array());       //DB get_record : good 테이블에서 데이터를 가져옴
@@ -430,7 +430,7 @@ function likeFun() {
     // echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
 }
 
-function hateFun() { 
+function hateFun(){ 
     global $DB, $USER;
 
     $data = $DB->get_record('good', array());       //DB get_record : good 테이블에서 데이터를 가져옴
@@ -457,13 +457,3 @@ function getUserGooder(){
 
     return $data;
 }
-
-/** 
-require_once('./preference.php');
-function autoDatasave(){
-    global $DB, $USER;
-
-    $cmid = $DB->get_field('user', 'gooder', array('id'=>$USER->id));
-    $data_pre = showPreference($cmid, $course->id);
-}
-*/
