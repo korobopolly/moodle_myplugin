@@ -29,7 +29,7 @@ $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', 
 
 echo $OUTPUT->header();
 
-$user_gooder_check = getUserGooder();    // 현재 접속자의 좋아요 참여 여부
+$user_gooder_check = getUserGooder(); // 현재 접속자의 좋아요 참여 여부
 
 if($user_gooder_check != 1){   // 유저의 gooder 필드를 체크해서 출력여부판단
     //좋아요 싫어요 버튼

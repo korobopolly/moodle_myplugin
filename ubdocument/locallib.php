@@ -424,10 +424,7 @@ function likeFun(){
     $user_data->gooder = 1;
 
     $DB->update_record('good', $object_good);       //DB update_record : good 테이블에 변수 값을 업데이트
-    //print_r($object_good_user); die;
     $DB->update_record('user', $user_data);  //DB update_record : usre 테이블에 gooder 필드를 업데이트 (참여x -> 참여o)
-
-    // echo "<script>alert(\"이 활동을 좋아합니다.\");</script>";
 }
 
 function hateFun(){ 
@@ -454,6 +451,5 @@ function getUserGooder(){
     global $DB, $USER;
 
     $data = $DB->get_field('user', 'gooder', array('id'=>$USER->id));
-
     return $data;
 }
