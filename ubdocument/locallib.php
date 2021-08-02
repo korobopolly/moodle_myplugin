@@ -453,3 +453,63 @@ function getUserGooder(){
     $data = $DB->get_field('user', 'gooder', array('id'=>$USER->id));
     return $data;
 }
+
+/**
+ * 무들내의 모든 사용자를 가져오는 함수
+ * 
+ * @global type $DB
+ * @return \stdClass
+ */
+function get_likehate(){
+    global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
+  
+    $html = ''; //초기화
+
+    $sql = 'SELECT p.id id, p.cid course_id, c.shortname course_name, p.cmid coursemodule_id, m.name module_name, f.name forum_name,
+            f.intro forum_intro, SUM(liked) liked, SUM(hate) hated
+            FROM mdl_preference p
+            JOIN mdl_course c ON c.id=p.cid
+            JOIN mdl_course_modules cm ON cm.id=p.cmid
+            JOIN mdl_modules m ON m.id=cm.module
+            JOIN mdl_forum f ON f.id=cm.instance
+            GROUP BY cm.id
+            ORDER BY cm.id';
+
+    if ($datas = $DB->get_records_sql($sql)) { 
+
+        $old_tid = 0; //변수 생성
+        foreach($datas as $v){
+            if ($v->id != $old_tid) { //id old_tid와 같지 않으면
+                if ($old_tid > 0) $html.="</table><br>"; //old_tid가 0이 아니면 table을 닫고 여백
+                $html.="<table class='table table-border'>"; 
+                //.= 내부의 모든 것을 출력 여백까지도
+                $html.= " 
+                <thead>
+                    <tr>
+                        <th>강좌명</th>
+                        <td>{$v->course_name}</td>
+                        <th>모듈명</th>
+                        <td>{$v->module_name}</td>
+                    </tr>
+                    <tr>
+                        <th>활동명</th>
+                        <td>{$v->forum_name}</td>
+                        <th>활동 설명</th>
+                        <td>{$v->forum_intro}</td>
+                    </tr>
+                    <tr>
+                        <th>좋아요</th>
+                        <td>{$v->liked}</td>
+                        <th>싫어요</th>
+                        <td>{$v->hated}</td>
+                    </tr>
+                </thead>";
+                $old_tid = $v->id; //old_tid에 id 값을 넣는다.
+            }
+        }
+        if ($old_tid > 0) $html.="</table><br>";
+    } else { //에러 처리
+        $html = "<tr><td colspan=2>데이터가 없습니다.</td></tr>";
+    }
+    return $html; //반환값
+}

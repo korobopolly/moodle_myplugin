@@ -29,35 +29,7 @@ $PAGE->requires->js_call_amd('local_ubdocument/ubdocument', 'table_definition', 
 
 echo $OUTPUT->header();
 
-$user_gooder_check = getUserGooder(); // 현재 접속자의 좋아요 참여 여부
-
-if($user_gooder_check != 1){   // 유저의 gooder 필드를 체크해서 출력여부판단
-    //좋아요 싫어요 버튼
-    echo html_writer::start_tag('form', array('method' => 'post', 'action'=>'action.php'));
-        $like=array('type' => 'submit', 'name' => 'like', 'id' => 'like', 'value' => '좋아요', 'class' => 'btn btn-primary');
-        echo html_writer::empty_tag('input', $like);
-        echo "&nbsp&nbsp";
-        $hate=array('type' => 'submit', 'name' => 'hate', 'id' => 'hate', 'value' => '싫어요', 'class' => 'btn btn-info btn-margin');
-        echo html_writer::empty_tag('input', $hate);
-    echo html_writer::end_tag('form');
-} else {
-    //disabled
-    echo html_writer::start_tag('form', array('method' => 'post', 'action'=>'action.php'));
-        $like=array('type' => 'submit', 'name' => 'like', 'id' => 'like', 'value' => '좋아요', 'class' => 'btn', 'style'=>'background-color:#696969; color:white;', 'disabled'=>'disabled');
-        echo html_writer::empty_tag('input', $like);
-        echo "&nbsp&nbsp";
-        $hate=array('type' => 'submit', 'name' => 'hate', 'id' => 'hate', 'value' => '싫어요', 'class' => 'btn btn-margin', 'style'=>'background-color:#696969; color:white;', 'disabled'=>'disabled');
-        echo html_writer::empty_tag('input', $hate);
-    echo html_writer::end_tag('form');
-    echo html_writer::tag('p','해당 평가는 한번만 가능합니다.');
-}
-
-$point_count = showFun();
-
-echo html_writer::start_div();
-echo "이 활동을 <b>$point_count</b><b>명</b>이 좋아합니다.";
-echo html_writer::end_div();
-
+print_r(get_likehate()); //모든 객체를 출력
 
 echo $OUTPUT->footer();
 

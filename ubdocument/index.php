@@ -4,6 +4,11 @@ require_once('./locallib.php');
 
 $pluginname = 'local_ubdocument';
 
+$context = context_system::instance();
+if (!has_capability('local/ubdocument:view', $context)) {
+    throw new moodle_exception(get_string('nopermission', $pluginname));
+}
+
 $PAGE->set_url('/local/ubdocument/index.php');
 $PAGE->set_context($context);
 $PAGE->set_title(get_string('pluginname', $pluginname));
