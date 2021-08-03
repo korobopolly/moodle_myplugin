@@ -499,9 +499,9 @@ function get_likehate(){
                     </tr>
                     <tr>
                         <th>좋아요</th>
-                        <td>{$v->liked}</td>
+                        <td>{$v->liked}명</td>
                         <th>싫어요</th>
-                        <td>{$v->hated}</td>
+                        <td>{$v->hated}명</td>
                     </tr>
                 </thead>";
                 $old_tid = $v->id; //old_tid에 id 값을 넣는다.
