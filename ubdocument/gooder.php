@@ -31,5 +31,7 @@ echo $OUTPUT->header();
 
 print_r(get_likehate()); //모든 객체를 출력
 
+echo  $OUTPUT->render_chart( getChart() ,  false ); //차트 출력
+
 echo $OUTPUT->footer();
 
