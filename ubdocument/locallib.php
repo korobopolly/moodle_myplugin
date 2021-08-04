@@ -518,8 +518,6 @@ function get_likehate(){
 function getChart(){
     // 파라메타로 모듈을 던져서 해당 모듈에 맞는 테이블로 쿼리는 만들게..
     global $DB;//moodle 내부의 DB(폴더)에서 함수를 불러옴 import랑 비슷함
-  
-    $html = ''; //초기화
 
     $sql = 'SELECT p.id id, p.cid course_id, c.shortname course_name, p.cmid coursemodule_id, m.name module_name, f.name forum_name,
             f.intro forum_intro, SUM(liked) liked, SUM(hate) hated
