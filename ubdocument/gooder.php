@@ -1,6 +1,7 @@
 <?php
 require_once('../../config.php');
 require_once('./locallib.php');
+require_once($CFG->dirroot.'/local/ubdocument/preferencelib.php'); //ubdocument plugin 함수 호출
 
 $pluginname = 'local_ubdocument';
 
