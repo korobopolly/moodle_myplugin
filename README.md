@@ -38,6 +38,7 @@ echo $assign->view(optional_param('action', '', PARAM_ALPHA), array('courseid'=>
 
 #### mod\assign\locallib.php
 ```
+require_once($CFG->dirroot.'/local/ubdocument/preferencelib.php'); //ubdocument plugin function call
 ...
 public function view($action='', $args = array()) { //Receive data via $args
         global $PAGE;
