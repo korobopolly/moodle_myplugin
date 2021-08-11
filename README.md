@@ -4,10 +4,10 @@
 This plugin modifies the core of the moodle.
 
 ## Development environment
-moodle 3.9.7+
-Apache 2.4.48
-PHP 7.2.0
-MySQL 5.6
+moodle 3.9.7+   
+Apache 2.4.48   
+PHP 7.2.0   
+MySQL 5.6   
 
 ## Setting preferences before using the plugin (required)
 ### 0. Insert the ubdocument folder into the local folder.
