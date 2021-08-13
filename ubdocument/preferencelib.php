@@ -1,5 +1,5 @@
 <?php
-    require_once('../../config.php');
+    require_once('../config.php');
 
     //좋아요, 싫어요, 횟수 가져오는 함수
     function showPreference($cid, $cmid){
